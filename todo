@@ -1,0 +1,52 @@
+# README
+- [ ] Write README
+# general
+- [ ] convert all files to space-tabs (might make me a sinner, oh well)
+# usb.c
+- [ ] Finish implementing USB driver
+- [ ] Posture for additional USB support of hubs, ethernet adapters, audio outputs, and mass storage devices
+- [ ] Steal extra RAM from USB buffer?
+# compilation
+- [ ] Implement the following:
+    | The OS              |
+    |---------------------|
+    | usb                 |
+    | system vars         |
+    | sound               |
+    | console             |
+    | commands            |
+    | filesystem          |
+    | networking          | 
+    | memory alloc        |
+    | 2d rendering engine |
+- [ ] Compile Flags:
+    - [ ] 'COLOR_MODE': indicates the bit-"ness" of the palette used by the display code, i.g. '888', '565', '555' etc.
+    - [ ] 'NETWORKING': indicates whether or not the binary should be built with networking support
+        - [ ] 'NETWORKING_USB': specifies USB Networking only
+            (Not recommended in conjunction with USB Sound)
+        - [ ] 'NETWORKING_WIFI': specifies Wireless Networking only
+        - [ ] 'NETWORKING_I2C': specifies I2C Networking only
+    - [ ] 'SOUND': indicates whether or not the binary should be built with sound support
+        - [ ] 'SOUND_USB': specifies Sound over USB 
+            (Not recommended in conjunction with USB Networking)
+        - [ ] 'SOUND_I2S': specifies Sound over I2S
+        - [ ] 'SOUND_PWM': specifies Sound over PWM
+    - [ ] 'HEADLESS': indicates whether or not the binary should be built with display functionality
+# multicore work
+- [ ] The follwing in highest to lowest order of Core 0 priority
+    - USB handling, Including:
+        - Filesystem
+        - Potentially Networking and Sound
+    - Networking
+    - 2D rendering engine
+    - Sound
+- [ ] *Most* program specific work delegated to Core 1 (special exceptions may apply)
+# filesystem
+- [ ] Posture for filesystem & SquashFs Compression (of as of yet determined variety) support
+- [ ] Posture additionally for FAT32 file system support for the aforementioned mass storage devices (4gb should be more than enough)
+- [ ] When decompressing a SquashFs file, use 4KB blocks such that each block may be loaded into SRAM 4 and/or 5 so that decompression is less likely to interupt DMA requests. Both 4 & 5 are likely to be used at startup to speed up loading the initial RamDisk
+- [ ] Level data exclusively in Flash? (~12Mbytes/s) or in USB MSD? (~12Mbits/s)
+- [ ] No XIP Cache?
+# networking
+- [ ] I2C, USB, Pico W support (Bluetooth, Wifi)
+- [ ] Use Alarms for network timeout
